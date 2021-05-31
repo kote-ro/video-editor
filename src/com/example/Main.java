@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 
 public class Main {
 
@@ -11,7 +12,8 @@ public class Main {
         ProcessBuilder processBuilder = new ProcessBuilder();
         // -- Linux --
         // задание рабочей директории
-        processBuilder.directory(new File("/home/ruslan/dev/video-editor/data"));
+        String path = getCurrentDirectory()+"/data";
+        processBuilder.directory(new File(path));
         // преобразование avi в mp4
         processBuilder.command("/bin/bash", "-c", "ffmpeg -i example.avi example.mp4");
         // запись снипптов видео в директорию
@@ -38,5 +40,9 @@ public class Main {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    static String getCurrentDirectory(){
+        return Paths.get("").toAbsolutePath().toString();
     }
 }
